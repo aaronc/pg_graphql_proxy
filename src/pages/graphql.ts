@@ -1,12 +1,7 @@
-import pg from 'pg'
+import { neon } from '@neondatabase/serverless';
 import type {APIRoute} from "astro";
 
-const {Client} = pg
-const client = new Client({
-    connectionString: import.meta.env.DATABASE_URL,
-})
-await client.connect()
-
+const sql = neon(import.meta.env.DATABASE_URL);
 
 export const GET: APIRoute = async ({params, request}) => {
     const {query, variables, operationName} = params;
@@ -21,13 +16,10 @@ export const POST: APIRoute = async ({params, request}) => {
 
 async function graphql(query?: string, variables?: string, operationName?: string) {
     try {
-        const res = await client.query(
-            'select graphql.resolve($1, $2, $3);',
-            [query, variables, operationName]
-        );
+        const [res] = await sql`select graphql.resolve(${query}, ${variables}, ${operationName});`;
 
         return new Response(
-            JSON.stringify(res.rows[0].resolve),
+            JSON.stringify(res.resolve),
             {
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,5 +4,5 @@ import 'graphiql/graphiql.css';
 
 export const GraphiQLWrapper = () => {
     const fetcher = createGraphiQLFetcher({ url: '/graphql' });
-    return <GraphiQL fetcher={fetcher} />
+    return <div style={{height:"100vh"}}><GraphiQL fetcher={fetcher} /></div>
 }
