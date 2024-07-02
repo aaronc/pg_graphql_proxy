@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import {GraphiQLWrapper} from "../components/graphiql";
+---
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>GraphiQL</title>
+</head>
+<body>
+<GraphiQLWrapper client:only="react" />
+</body>
+</html>
